@@ -9,7 +9,6 @@ const AppButton: React.FunctionComponent<IProps> = ({ config, ...rest }) => {
   const { children } = rest;
 
   return (
-    // eslint-disable-next-line react/button-has-type
     <Button
       type={buttonType}
       id={buttonId}

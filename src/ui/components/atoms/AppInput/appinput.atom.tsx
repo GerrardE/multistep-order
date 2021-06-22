@@ -24,7 +24,7 @@ const AppInput: React.FunctionComponent<IProps> = ({ config }) => {
       <textarea
         className={inputClassName}
         placeholder={inputPlaceholder}
-        ref={inputRef}
+        {...inputRef}
         id={inputId}
         name={inputName}
         readOnly={inputReadOnly}
@@ -40,7 +40,7 @@ const AppInput: React.FunctionComponent<IProps> = ({ config }) => {
           type={inputType}
           className={inputClassName}
           placeholder={inputPlaceholder}
-          ref={inputRef}
+          {...inputRef}
           id={inputId}
           name={inputName}
           onChange={inputOnChange}
@@ -59,7 +59,7 @@ const AppInput: React.FunctionComponent<IProps> = ({ config }) => {
       type={inputType}
       className={inputClassName}
       placeholder={inputPlaceholder}
-      ref={inputRef}
+      {...inputRef}
       id={inputId}
       name={inputName}
       readOnly={inputReadOnly}

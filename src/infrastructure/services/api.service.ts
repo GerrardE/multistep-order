@@ -1,22 +1,25 @@
-import axios from "axios";
+import axios, { AxiosPromise } from "axios";
 
-axios.defaults.baseURL = "https://us-central1-sensei-edfdf.cloudfunctions.net/app/api/v1/";
-axios.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
+axios.defaults.headers.post["Content-Type"] = "application/json";
 
-export const getResource = async (path: string): Promise<unknown> => {
-  try {
-    const response = await axios.get(path);
-    return response.data.payload;
-  } catch (error) {
-    throw error.response.data;
-  }
-};
+class ApiService {
+  static getResource(path: string): AxiosPromise {
+    try {
+      const response = axios.get(path);
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  };
 
-export const postResource = (path: string, body: any): Promise<unknown> => {
-  try {
-    const response = axios.post(path, body);
-    return response;
-  } catch (error) {
-    throw error.response.data;
-  }
-};
+  static postResource(path: string, body: any): AxiosPromise {
+    try {
+      const response = axios.post(path, body);
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  };
+}
+
+export default ApiService;

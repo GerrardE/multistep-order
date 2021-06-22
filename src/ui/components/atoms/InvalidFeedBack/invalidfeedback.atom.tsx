@@ -1,10 +1,11 @@
 import React from "react";
-import IProps from "./invalidfeedback.interface";
+import IErrorMessageProps from "./invalidfeedback.interface";
+import Div from "./invalidfeedback.styles";
 
-const AppErrorMessage: React.FunctionComponent<IProps> = ({ config }) => {
+const AppErrorMessage: React.FunctionComponent<IErrorMessageProps> = ({ config }) => {
   const { message } = config;
 
-  return <div className="invalid-feedback">{message}</div>;
+  return <Div className="invalid-feedback">{message}</Div>;
 };
 
 export default AppErrorMessage;

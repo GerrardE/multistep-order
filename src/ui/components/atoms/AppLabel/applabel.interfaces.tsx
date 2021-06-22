@@ -3,7 +3,7 @@ interface IProps {
     labelHtmlFor: string,
     labelClassName: string
   },
-  children: React.ReactChild,
+  children: React.ReactNode,
 }
 
 export default IProps;

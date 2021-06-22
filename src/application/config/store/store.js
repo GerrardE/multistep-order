@@ -4,7 +4,7 @@ import thunk from "redux-thunk";
 import { createLogger } from "redux-logger";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import index from "@domain/redux";
+import index from "../../../domain/redux";
 
 const logger = createLogger({
   /* https://github.com/evgenyrodionov/redux-logger */

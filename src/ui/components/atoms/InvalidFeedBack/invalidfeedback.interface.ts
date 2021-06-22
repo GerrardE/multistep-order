@@ -1,7 +1,8 @@
-interface IProps {
+interface IErrorMessageProps {
     config: {
-        message: string
+        message: string,
+        styles?: string,
     }
 }
 
-export default IProps;
+export default IErrorMessageProps;

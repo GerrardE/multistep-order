@@ -1,24 +1,18 @@
-import React, { Fragment } from "react";
+import { Fragment } from "react";
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
+import { store, persistor } from "./application/config/store/store";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "@base/styles/styles.css";
+import { OrderPage } from "./ui/pages";
 
-export default (): JSX.Element => (
+const App = (): JSX.Element => (
   <Fragment>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <Router>
-          <Switch>
-            {routes.map(route => (
-              <Route
-                exact
-                key={route.path}
-                path={route.path}
-                component={route.component}
-              />
-            ))}
-          </Switch>
-        </Router>
+        <OrderPage />
       </PersistGate>
     </Provider>
   </Fragment>
 );
+
+export default App;
