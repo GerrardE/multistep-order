@@ -1,12 +1,6 @@
 import { ReactNode } from "react";
 import { UseFormRegisterReturn } from "react-hook-form";
 
-interface dropDownItems {
-    id: string,
-    name: string,
-    [key: string]: any
-}
-
 interface IDropdownProps {
     config: {
         dropdownClassName?: string,

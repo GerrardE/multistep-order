@@ -1,18 +1,37 @@
-import { FormGroup, ListGroup, ListGroupItem } from "reactstrap";
+import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import { FormGroup } from "reactstrap";
 import classnames from "classnames";
-import { AppErrorMessage, AppInput, AppLabel, T3, T6 } from "../../atoms";
-import { StyledCol } from "./order.styles";
+import { AppButton, AppErrorMessage, AppInput, AppLabel, T3, T6 } from "../../atoms";
+import { StyledCol, StyledForm, StyledRow } from "./order.styles";
 import { IProps } from "./order.interfaces";
 import { emailSchema, required } from "../../../utils/validations/schema";
 import SummaryView from "./summary.view";
+import { postOrderThunk } from "../../../../domain/redux/orders/orders.thunks";
 
-const ConfirmationView: React.FunctionComponent<IProps> = ({ register, errors, form }) => {
+const ConfirmationView: React.FunctionComponent<IProps> = ({ setForm, form, step, setStep }) => {
+    const { register, handleSubmit, formState: { errors } } = useForm();
+
     const { acceptedterms, email } = errors;
 
+    const onPrev = () => {
+        setStep({
+            ...step,
+            page: step.page -= 1,
+            percent: step.percent-=step.increment
+        })
+    }
+
+    const dispatch = useDispatch();
+
+    const onSubmit = () => {
+        dispatch(postOrderThunk(form));
+    }
+
     return (
-        <StyledCol className="snow">
+        <StyledForm onSubmit={handleSubmit(onSubmit)}>
             <T3 className="p-0">Confirm Your Order</T3>
-            <T6 className="p-0 mb-4">Review your order and submit:</T6>
+            <T6 className="p-0 mb-4">Review your order and submit</T6>
 
             <SummaryView form={form} view="summary" />
 
@@ -34,6 +53,8 @@ const ConfirmationView: React.FunctionComponent<IProps> = ({ register, errors, f
                         inputClassName: classnames("form-control", {
                             "is-invalid": email,
                         }),
+                        inputDefaultValue: form.email,
+                        inputOnChange: (e: React.ChangeEvent<HTMLInputElement>) => setForm({ ...form, email: e.target.value })
                     }}
                 />
                 <AppErrorMessage config={{ message: email?.message }} />
@@ -46,6 +67,8 @@ const ConfirmationView: React.FunctionComponent<IProps> = ({ register, errors, f
                         inputId: "acceptedterms",
                         inputName: "acceptedterms",
                         inputClassName: "acceptedterms",
+                        inputChecked: form.acceptedterms,
+                        inputOnChange: (e: React.ChangeEvent<HTMLInputElement>) => setForm({ ...form, acceptedterms: e.target.checked })
                     }}
                 />
                 <AppLabel
@@ -58,7 +81,28 @@ const ConfirmationView: React.FunctionComponent<IProps> = ({ register, errors, f
                 </AppLabel>
                 <AppErrorMessage config={{ message: acceptedterms?.message }} />
             </StyledCol>
-        </StyledCol>
+
+            <StyledRow className="justify mt-4">
+                <AppButton
+                    config={{
+                        buttonType: "submit",
+                        buttonOnClick: () => onPrev(),
+                        buttonClassName: "white mr-2",
+                    }}
+                >
+                    Back
+                </AppButton>
+                <AppButton
+                    config={{
+                        buttonType: "submit",
+                        buttonOnClick: () => onSubmit,
+                        buttonClassName: "primary",
+                    }}
+                >
+                    Submit
+                </AppButton>
+            </StyledRow>
+        </StyledForm>
     )
 };
 

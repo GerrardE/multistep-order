@@ -37,5 +37,12 @@ export const numberFieldSchema = {
 export const cardNumberSchema = {
   required: "credit card number is required",
   minLength: { value: 13, message: "min. of 13 digits required" },
-  maxLength: { value: 13, message: "max. of 13 digits required" },
+  maxLength: { value: 20, message: "max. of 20 digits required" },
 };
+
+export const isEmpty = (value: undefined | null | {} | string): boolean => (
+  value === undefined
+  || value === null
+  || (typeof value === "object" && Object.keys(value).length === 0)
+  || (typeof value === "string" && value.trim().length === 0)
+);

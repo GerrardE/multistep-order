@@ -1,4 +1,4 @@
-import { UseFormRegister, FieldValues, DeepMap, FieldError, UseFormGetValues } from "react-hook-form"
+import { ISubscriptionPlan } from "../../../../domain/redux/orders/orders.interfaces";
 
 export interface IFormState {
     duration: number,
@@ -6,17 +6,19 @@ export interface IFormState {
     price: number,
     finalprice: number,
     upfrontpayment: string,
+    cardno: string,
+    cardexpdate: string,
+    cardcode: string,
+    acceptedterms: boolean,
+    email: string,
 }
+
+export interface IStep { page: number, percent: number, increment: number }
 
 export interface IProps {
-    register: UseFormRegister<FieldValues>,
-    errors: DeepMap<FieldValues, FieldError>,
-    form: IFormState,
-}
-
-export interface ISubProps {
-    register: UseFormRegister<FieldValues>,
-    errors: DeepMap<FieldValues, FieldError>,
     setForm: (form: IFormState) => void,
-    form: IFormState
+    form: IFormState,
+    step: IStep,
+    setStep: (step: IStep) => void,
+    subscription_plans: ISubscriptionPlan[] 
 }

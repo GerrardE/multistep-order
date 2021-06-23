@@ -1,6 +1,6 @@
 interface IImageAtomProps {
     config: {
-        imageSrc: string | any,
+        imageSrc: string,
         imageClassName?: string,
         imageAlt?: string,
         imageWidth?: string,

@@ -1,6 +1,7 @@
 import { Dispatch } from "redux";
 import apiService from "../../../infrastructure/services/api.service";
 import * as actions from "./orders.actions";
+import { IFormState } from "./orders.interfaces";
 
 export const getPricesThunk = () => async (dispatch: Dispatch<any>) => {
     try {
@@ -10,6 +11,18 @@ export const getPricesThunk = () => async (dispatch: Dispatch<any>) => {
       dispatch(actions.getPricesSuccess(response.data));
     } catch (errors) {
       dispatch(actions.getPricesFail(errors));
+      dispatch(actions.loading(false));
+    }
+  };
+
+export const postOrderThunk = (data: IFormState) => async (dispatch: Dispatch<any>) => {
+    try {
+      dispatch(actions.loading(true));
+      const response = await apiService.postResource("https://httpbin.org/post", data);
+      dispatch(actions.loading(false));
+      dispatch(actions.postOrderSuccess(response.data));
+    } catch (errors) {
+      dispatch(actions.postOrderFail(errors));
       dispatch(actions.loading(false));
     }
   };

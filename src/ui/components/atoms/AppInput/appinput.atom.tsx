@@ -17,6 +17,7 @@ const AppInput: React.FunctionComponent<IProps> = ({ config }) => {
     inputGroup,
     inputGroupIcon,
     inputOnChange,
+    inputChecked,
   } = config;
 
   if (inputFieldType === "textarea") {
@@ -63,7 +64,9 @@ const AppInput: React.FunctionComponent<IProps> = ({ config }) => {
       id={inputId}
       name={inputName}
       readOnly={inputReadOnly}
+      onChange={inputOnChange}
       defaultValue={inputDefaultValue}
+      defaultChecked={inputChecked}
     />
   );
 };

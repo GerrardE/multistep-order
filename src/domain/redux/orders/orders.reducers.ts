@@ -5,6 +5,7 @@ const initialState: IOrdersState = {
     prices: {
         subscription_plans: []
     },
+    order: {},
     errors: {},
     loading: false,
 }
@@ -24,6 +25,18 @@ const ordersReducer = (state = initialState, action: any) => {
             }
 
         case constants.GET_PRICES_FAIL:
+            return {
+                ...state,
+                errors: action.payload
+            }
+
+        case constants.POST_ORDER_SUCCESS:
+            return {
+                ...state,
+                order: action.payload
+            }
+
+        case constants.POST_ORDER_FAIL:
             return {
                 ...state,
                 errors: action.payload

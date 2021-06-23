@@ -1,3 +1,4 @@
+import React from "react";
 import { UseFormRegisterReturn } from "react-hook-form";
 
 interface IProps {
@@ -10,10 +11,11 @@ interface IProps {
     inputId?: string;
     inputName?: string;
     inputReadOnly?: boolean;
-    inputDefaultValue?: string;
+    inputDefaultValue?: string | number;
     inputGroup?: string;
     inputGroupIcon?: React.ReactElement;
-    inputOnChange?: React.ChangeEvent<HTMLInputElement> | React.FormEvent<HTMLInputElement>|any;
+    inputChecked?: boolean,
+    inputOnChange?: React.ChangeEventHandler<HTMLInputElement> | undefined;
   };
 }
 

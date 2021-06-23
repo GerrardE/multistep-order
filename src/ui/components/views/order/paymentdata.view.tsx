@@ -1,18 +1,37 @@
+import { useForm } from "react-hook-form";
 import { FormGroup } from "reactstrap";
 import classnames from "classnames";
-import { AppErrorMessage, AppInput, AppLabel, T3, T6 } from "../../atoms";
-import { StyledCol } from "./order.styles";
+import { AppButton, AppErrorMessage, AppInput, AppLabel, T3, T6 } from "../../atoms";
+import { StyledForm, StyledRow } from "./order.styles";
 import { IProps } from "./order.interfaces";
 import { cardNumberSchema, pinSchema, required } from "../../../utils/validations/schema";
 import SummaryView from "./summary.view";
 
-const PaymentdataView: React.FunctionComponent<IProps> = ({ register, errors, form }) => {
+const PaymentdataView: React.FunctionComponent<IProps> = ({ setForm, form, setStep, step }) => {
+    const { register, handleSubmit, formState: { errors } } = useForm();
+
     const { cardno, cardexpdate, cardcode } = errors;
 
+    const onPrev = () => {
+        setStep({
+            ...step,
+            page: step.page -= 1,
+            percent: step.percent-=step.increment
+        })
+    }
+
+    const onNext = () => {
+        setStep({
+            ...step,
+            page: step.page += 1,
+            percent: step.percent+=step.increment
+        })
+    }
+
     return (
-        <StyledCol className="snow">
+        <StyledForm onSubmit={handleSubmit(onNext)}>
             <T3 className="p-0">Your Payment Information</T3>
-            <T6 className="p-0">Enter your payment information to complete the order</T6>
+            <T6 className="p-0">Enter your payment information to continue</T6>
 
             <SummaryView form={form} />
 
@@ -34,6 +53,9 @@ const PaymentdataView: React.FunctionComponent<IProps> = ({ register, errors, fo
                         inputClassName: classnames("form-control", {
                             "is-invalid": cardno,
                         }),
+                        inputDefaultValue: form.cardno,
+                        inputOnChange: (e: React.ChangeEvent<HTMLInputElement>) =>
+                            setForm({ ...form, cardno: e.target.value })
                     }}
                 />
                 <AppErrorMessage config={{ message: cardno?.message }} />
@@ -56,6 +78,8 @@ const PaymentdataView: React.FunctionComponent<IProps> = ({ register, errors, fo
                         inputClassName: classnames("form-control", {
                             "is-invalid": cardexpdate,
                         }),
+                        inputDefaultValue: form.cardexpdate,
+                        inputOnChange: (e: React.ChangeEvent<HTMLInputElement>) => setForm({ ...form, cardexpdate: e.target.value })
                     }}
                 />
                 <AppErrorMessage config={{ message: cardexpdate?.message }} />
@@ -78,11 +102,34 @@ const PaymentdataView: React.FunctionComponent<IProps> = ({ register, errors, fo
                         inputClassName: classnames("form-control", {
                             "is-invalid": cardcode,
                         }),
+                        inputDefaultValue: form.cardcode.toString(),
+                        inputOnChange: (e: React.ChangeEvent<HTMLInputElement>) => setForm({ ...form, cardcode: e.target.value })
                     }}
                 />
                 <AppErrorMessage config={{ message: cardcode?.message }} />
             </FormGroup>
-        </StyledCol>
+
+            <StyledRow className="justify mt-4">
+                <AppButton
+                    config={{
+                        buttonType: "submit",
+                        buttonOnClick: () => onPrev(),
+                        buttonClassName: "white mr-2",
+                    }}
+                >
+                    Back
+                </AppButton>
+                <AppButton
+                    config={{
+                        buttonType: "submit",
+                        buttonOnClick: () => onNext,
+                        buttonClassName: "primary",
+                    }}
+                >
+                    Continue
+                </AppButton>
+            </StyledRow>
+        </StyledForm>
     )
 };
 

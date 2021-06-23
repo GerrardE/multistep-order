@@ -17,4 +17,13 @@ export const getPricesFail = (data: interfaces.IGetPricesFail) => ({
   payload: data,
 });
 
-/* POST SUBSCRIPTION */
+/* POST ORDER */
+export const postOrderSuccess = (data: interfaces.IPostOrderSuccess) => ({
+  type: constants.POST_ORDER_SUCCESS,
+  payload: data,
+});
+
+export const postOrderFail = (data: interfaces.IPostOrderFail) => ({
+  type: constants.POST_ORDER_FAIL,
+  payload: data,
+});

@@ -10,7 +10,7 @@ const appColors = {
     darkgray: "#9fa5b1",
     lavender: "#d1e2fb",
     darkslateblue: "#445977",
-    red: "red"
+    green: "green"
 }
 
 export default appColors;

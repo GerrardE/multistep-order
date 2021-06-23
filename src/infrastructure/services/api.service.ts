@@ -1,4 +1,5 @@
 import axios, { AxiosPromise } from "axios";
+import { IFormState } from "../../domain/redux/orders/orders.interfaces";
 
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
@@ -12,7 +13,7 @@ class ApiService {
     }
   };
 
-  static postResource(path: string, body: any): AxiosPromise {
+  static postResource(path: string, body: IFormState): AxiosPromise {
     try {
       const response = axios.post(path, body);
       return response;

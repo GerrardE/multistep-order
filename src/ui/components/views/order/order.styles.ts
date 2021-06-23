@@ -78,7 +78,7 @@ const Progress = styled(Pg).attrs((props) => ({
 
 const Small = styled.small`
     font-size: .7rem;
-    color: ${appColors.red};
+    color: ${appColors.green};
 `
 
 export { StyledCol, StyledRow, StyledForm, Progress, Small };
