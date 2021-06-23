@@ -31,7 +31,9 @@ export interface IPriceResp extends IRespSuccess {
     subscription_plans: ISubscriptionPlan[];
 }
 
-export interface IRespError {}
+export interface IRespError {
+    message: string;
+}
 
 export interface ILoading {
     type: typeof constants.ORDER_LOADING,

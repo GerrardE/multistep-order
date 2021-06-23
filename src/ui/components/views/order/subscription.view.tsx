@@ -1,13 +1,13 @@
 import { useForm } from "react-hook-form";
 import { FormGroup } from "reactstrap";
 import { AppDropdown, AppErrorMessage, AppLabel, T3, T6, AppButton } from "../../atoms";
-import { Small } from "./order.styles";
+import { Small, Spinner } from "./order.styles";
 import { IProps } from "./order.interfaces";
 import { required } from "../../../utils/validations/schema";
 import { StyledForm, StyledRow } from "./order.styles";
 import SummaryView from "./summary.view";
 
-const SubscriptionView: React.FunctionComponent<IProps> = ({ setForm, form, setStep, step, subscription_plans }) => {
+const SubscriptionView: React.FunctionComponent<IProps> = ({ setForm, form, setStep, step, subscription_plans, loading }) => {
     // dynamic data, can be integrated with an api in the future
     const cloudsizes: number[] = [5, 10, 50];
     const paymentoptions: string[] = ["no", "yes"];
@@ -19,8 +19,8 @@ const SubscriptionView: React.FunctionComponent<IProps> = ({ setForm, form, setS
     const onNext = () => {
         setStep({
             ...step,
-            page: step.page+=1,
-            percent: step.percent+=step.increment
+            page: step.page += 1,
+            percent: step.percent += step.increment
         })
     }
 
@@ -44,6 +44,7 @@ const SubscriptionView: React.FunctionComponent<IProps> = ({ setForm, form, setS
                     config={{
                         dropdownRef: register("duration", required),
                         dropdownName: "duration",
+                        dropdownValue: form.duration,
                         dropdownOnChange: (e) => {
                             let value = Number(e.target.value);
 
@@ -51,12 +52,12 @@ const SubscriptionView: React.FunctionComponent<IProps> = ({ setForm, form, setS
 
                             setForm({
                                 ...form,
-                                duration: e.target.value,
+                                duration: value,
                                 price: (price) ? price : form.price,
                                 finalprice: (price) ? (
-                                    (form.upfrontpayment === "yes") ? 
-                                    (price * form.amount * .9 * value) : 
-                                    (price * form.amount * value)
+                                    (form.upfrontpayment === "yes") ?
+                                        (price * form.amount * .9 * value) :
+                                        (price * form.amount * value)
                                 ) : form.finalprice,
                             })
                         }
@@ -64,7 +65,10 @@ const SubscriptionView: React.FunctionComponent<IProps> = ({ setForm, form, setS
                 >
                     {
                         subscription_plans && subscription_plans.map((item) => (
-                            <option value={item.duration_months} key={item.duration_months} selected={form.duration === item.duration_months} defaultValue={item.duration_months}>
+                            <option
+                                key={item.duration_months}
+                                value={item.duration_months}
+                            >
                                 {`${item.duration_months} months, $${item.price_usd_per_gb} per gb`}
                             </option>
                         ))
@@ -85,21 +89,26 @@ const SubscriptionView: React.FunctionComponent<IProps> = ({ setForm, form, setS
                     config={{
                         dropdownRef: register("amount", required),
                         dropdownName: "amount",
+                        dropdownValue: form.amount,
                         dropdownOnChange: (e) => {
                             let value = Number(e.target.value);
+
                             setForm({
                                 ...form,
                                 amount: value,
-                                finalprice: (form.upfrontpayment === "yes") ? 
-                                (form.price * value * .9 * form.duration) : 
-                                (form.price * value * form.duration)
+                                finalprice: (form.upfrontpayment === "yes") ?
+                                    (form.price * value * .9 * form.duration) :
+                                    (form.price * value * form.duration)
                             })
                         }
                     }}
                 >
                     {
                         cloudsizes && cloudsizes.map((item) => (
-                            <option value={item} key={item} selected={form.amount === item}>
+                            <option
+                                key={item}
+                                value={item}
+                            >
                                 {`${item} gigabytes, cloud storage`}
                             </option>
                         ))
@@ -120,20 +129,24 @@ const SubscriptionView: React.FunctionComponent<IProps> = ({ setForm, form, setS
                     config={{
                         dropdownRef: register("upfrontpayment", required),
                         dropdownName: "upfrontpayment",
+                        dropdownValue: form.upfrontpayment,
                         dropdownOnChange: (e) => {
                             setForm({
                                 ...form,
                                 upfrontpayment: e.target.value,
-                                finalprice: (e.target.value === "yes") ? 
-                                (form.finalprice * .9) : 
-                                (form.price * form.amount * form.duration)
+                                finalprice: (e.target.value === "yes") ?
+                                    (form.finalprice * .9) :
+                                    (form.price * form.amount * form.duration)
                             })
                         }
                     }}
                 >
                     {
                         paymentoptions && paymentoptions.map((item) => (
-                            <option value={item} key={item} selected={form.upfrontpayment === item}>
+                            <option
+                                key={item}
+                                value={item}
+                            >
                                 {item}
                             </option>
                         ))
@@ -143,16 +156,20 @@ const SubscriptionView: React.FunctionComponent<IProps> = ({ setForm, form, setS
                 <Small>NB: Upfront payment attracts 10% discount of total price of order</Small>
             </FormGroup>
             <StyledRow className="justify mt-4">
-                <AppButton
-                    config={{
-                        buttonType: "submit",
-                        buttonId: "login",
-                        buttonOnClick: () => onNext,
-                        buttonClassName: "primary",
-                    }}
-                >
-                    Continue
-                </AppButton>
+                {
+                    loading ?
+                        <Spinner /> :
+                        <AppButton
+                            config={{
+                                buttonType: "submit",
+                                buttonId: "login",
+                                buttonOnClick: () => onNext,
+                                buttonClassName: "primary",
+                            }}
+                        >
+                            Continue
+                        </AppButton>
+                }
             </StyledRow>
         </StyledForm>
     )

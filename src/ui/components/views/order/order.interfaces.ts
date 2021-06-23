@@ -20,5 +20,6 @@ export interface IProps {
     form: IFormState,
     step: IStep,
     setStep: (step: IStep) => void,
-    subscription_plans: ISubscriptionPlan[] 
+    subscription_plans: ISubscriptionPlan[], 
+    loading?: boolean
 }

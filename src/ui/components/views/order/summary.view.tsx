@@ -1,7 +1,7 @@
 import { ListGroup, ListGroupItem } from "reactstrap";
 import { IFormState } from "./order.interfaces";
 
-const SummaryView: React.FunctionComponent<{ form: IFormState, view?: string }> = ({ form, view="" }) => {
+const SummaryView: React.FunctionComponent<{ form: IFormState, view?: string }> = ({ form, view = "" }) => {
     return (
         <ListGroup className="mt-4">
             <ListGroupItem>Duration: {`${form.duration} months`}</ListGroupItem>

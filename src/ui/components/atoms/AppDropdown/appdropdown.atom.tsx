@@ -7,6 +7,8 @@ const AppDropdown: React.FunctionComponent<IDropdownProps> = ({ config, children
         dropdownRef,
         dropdownName,
         dropdownOnChange,
+        dropdownDefault,
+        dropdownValue,
         dropdownSize,
     } = config;
 
@@ -16,6 +18,8 @@ const AppDropdown: React.FunctionComponent<IDropdownProps> = ({ config, children
             {...dropdownRef}
             name={dropdownName}
             size={dropdownSize}
+            value={dropdownValue}
+            defaultValue={dropdownDefault}
             onChange={dropdownOnChange}
         >
             {

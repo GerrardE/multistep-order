@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { Col, Row, Form, Progress as Pg } from "reactstrap";
+import { Col, Row, Form, Progress as Pg, Spinner as Sp } from "reactstrap";
 import appColors from "../../atoms/AppColors/appcolors";
 import { size } from "../../atoms/AppScreenSizes/screens.atoms";
 
@@ -17,11 +17,16 @@ const StyledCol = styled(Col)`
     };
     
     ${css`
-      @media (max-width: ${size.mobileM}) {
+      @media (max-width: ${size.mobileL}) {
         &.darkslategray {
             height: 20%;
         }; 
-        
+
+        .text-snow {
+            margin: 10% auto 1rem;
+            text-align: center;
+        }
+
         &.snow {
             height: 100%;
         };
@@ -81,4 +86,14 @@ const Small = styled.small`
     color: ${appColors.green};
 `
 
-export { StyledCol, StyledRow, StyledForm, Progress, Small };
+const Spinner = styled(Sp)`
+    width: 3rem;
+    height: 3rem;
+    color: ${appColors.darkslateblue};
+    
+    .sr-only {
+        display: none;
+    }
+`;
+
+export { StyledCol, StyledRow, StyledForm, Progress, Small, Spinner };

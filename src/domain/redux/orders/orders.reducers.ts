@@ -6,8 +6,10 @@ const initialState: IOrdersState = {
         subscription_plans: []
     },
     order: {},
-    errors: {},
-    loading: false,
+    errors: {
+        message: ""
+    },
+    loading: true,
 }
 
 const ordersReducer = (state = initialState, action: any) => {

@@ -1,15 +1,16 @@
+import { Fragment } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { FormGroup } from "reactstrap";
 import classnames from "classnames";
 import { AppButton, AppErrorMessage, AppInput, AppLabel, T3, T6 } from "../../atoms";
-import { StyledCol, StyledForm, StyledRow } from "./order.styles";
+import { StyledCol, StyledForm, StyledRow, Spinner } from "./order.styles";
 import { IProps } from "./order.interfaces";
 import { emailSchema, required } from "../../../utils/validations/schema";
 import SummaryView from "./summary.view";
 import { postOrderThunk } from "../../../../domain/redux/orders/orders.thunks";
 
-const ConfirmationView: React.FunctionComponent<IProps> = ({ setForm, form, step, setStep }) => {
+const ConfirmationView: React.FunctionComponent<IProps> = ({ setForm, form, step, setStep, loading }) => {
     const { register, handleSubmit, formState: { errors } } = useForm();
 
     const { acceptedterms, email } = errors;
@@ -18,7 +19,7 @@ const ConfirmationView: React.FunctionComponent<IProps> = ({ setForm, form, step
         setStep({
             ...step,
             page: step.page -= 1,
-            percent: step.percent-=step.increment
+            percent: step.percent -= step.increment
         })
     }
 
@@ -83,24 +84,30 @@ const ConfirmationView: React.FunctionComponent<IProps> = ({ setForm, form, step
             </StyledCol>
 
             <StyledRow className="justify mt-4">
-                <AppButton
-                    config={{
-                        buttonType: "submit",
-                        buttonOnClick: () => onPrev(),
-                        buttonClassName: "white mr-2",
-                    }}
-                >
-                    Back
-                </AppButton>
-                <AppButton
-                    config={{
-                        buttonType: "submit",
-                        buttonOnClick: () => onSubmit,
-                        buttonClassName: "primary",
-                    }}
-                >
-                    Submit
-                </AppButton>
+                {
+                    loading ?
+                        <Spinner /> :
+                        <Fragment>
+                            <AppButton
+                                config={{
+                                    buttonType: "submit",
+                                    buttonOnClick: () => onPrev(),
+                                    buttonClassName: "white mr-2",
+                                }}
+                            >
+                                Back
+                            </AppButton>
+                            <AppButton
+                                config={{
+                                    buttonType: "submit",
+                                    buttonOnClick: () => onSubmit,
+                                    buttonClassName: "primary",
+                                }}
+                            >
+                                Submit
+                            </AppButton>
+                        </Fragment>
+                }
             </StyledRow>
         </StyledForm>
     )

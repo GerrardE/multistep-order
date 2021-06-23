@@ -16,7 +16,7 @@ const PaymentdataView: React.FunctionComponent<IProps> = ({ setForm, form, setSt
         setStep({
             ...step,
             page: step.page -= 1,
-            percent: step.percent-=step.increment
+            percent: step.percent -= step.increment
         })
     }
 
@@ -24,7 +24,7 @@ const PaymentdataView: React.FunctionComponent<IProps> = ({ setForm, form, setSt
         setStep({
             ...step,
             page: step.page += 1,
-            percent: step.percent+=step.increment
+            percent: step.percent += step.increment
         })
     }
 

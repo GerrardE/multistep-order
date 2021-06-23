@@ -1,3 +1,4 @@
+import toast from "react-hot-toast";
 import { Dispatch } from "redux";
 import apiService from "../../../infrastructure/services/api.service";
 import * as actions from "./orders.actions";
@@ -21,8 +22,9 @@ export const postOrderThunk = (data: IFormState) => async (dispatch: Dispatch<an
       const response = await apiService.postResource("https://httpbin.org/post", data);
       dispatch(actions.loading(false));
       dispatch(actions.postOrderSuccess(response.data));
+      toast.success("Order successfully saved!")
     } catch (errors) {
-      dispatch(actions.postOrderFail(errors));
       dispatch(actions.loading(false));
+      dispatch(actions.postOrderFail(errors));
     }
   };
