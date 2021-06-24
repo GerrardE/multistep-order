@@ -50,6 +50,7 @@ const PaymentdataView: React.FunctionComponent<IProps> = ({ setForm, form, setSt
                         inputRef: register("cardno", cardNumberSchema),
                         inputId: "cardno",
                         inputName: "cardno",
+                        inputPlaceholder: "e.g: 1234567891234",
                         inputClassName: classnames("form-control", {
                             "is-invalid": cardno,
                         }),
@@ -99,6 +100,7 @@ const PaymentdataView: React.FunctionComponent<IProps> = ({ setForm, form, setSt
                         inputRef: register("cardcode", pinSchema),
                         inputId: "cardcode",
                         inputName: "cardcode",
+                        inputPlaceholder: "e.g: 1234",
                         inputClassName: classnames("form-control", {
                             "is-invalid": cardcode,
                         }),

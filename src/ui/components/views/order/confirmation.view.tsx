@@ -51,6 +51,7 @@ const ConfirmationView: React.FunctionComponent<IProps> = ({ setForm, form, step
                         inputRef: register("email", emailSchema),
                         inputId: "email",
                         inputName: "email",
+                        inputPlaceholder: "test@gmail.com",
                         inputClassName: classnames("form-control", {
                             "is-invalid": email,
                         }),
