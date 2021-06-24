@@ -11,6 +11,7 @@ export const getPricesThunk = () => async (dispatch: Dispatch<any>) => {
       dispatch(actions.loading(false));
       dispatch(actions.getPricesSuccess(response.data));
     } catch (errors) {
+      toast.error(errors.message)
       dispatch(actions.getPricesFail(errors));
       dispatch(actions.loading(false));
     }
@@ -24,6 +25,7 @@ export const postOrderThunk = (data: IFormState) => async (dispatch: Dispatch<an
       dispatch(actions.postOrderSuccess(response.data));
       toast.success("Order successfully saved!")
     } catch (errors) {
+      toast.error(errors.message)
       dispatch(actions.loading(false));
       dispatch(actions.postOrderFail(errors));
     }
