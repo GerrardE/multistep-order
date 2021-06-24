@@ -10,7 +10,6 @@ const AppInput: React.FunctionComponent<IProps> = ({ config }) => {
     inputRef,
     inputId,
     inputName,
-    inputReadOnly,
     inputDefaultValue,
     inputOnChange,
     inputChecked,
@@ -24,7 +23,6 @@ const AppInput: React.FunctionComponent<IProps> = ({ config }) => {
       {...inputRef}
       id={inputId}
       name={inputName}
-      readOnly={inputReadOnly}
       onChange={inputOnChange}
       defaultValue={inputDefaultValue}
       defaultChecked={inputChecked}

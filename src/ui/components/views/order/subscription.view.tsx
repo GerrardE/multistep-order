@@ -3,9 +3,10 @@ import { FormGroup } from "reactstrap";
 import { AppDropdown, AppErrorMessage, AppLabel, T3, T6, AppButton } from "../../atoms";
 import { Small, Spinner } from "./order.styles";
 import { IProps } from "./order.interfaces";
-import { required } from "../../../utils/validations/schema";
+import { required } from "./order.formutils";
 import { StyledForm, StyledRow } from "./order.styles";
 import SummaryView from "./summary.view";
+import { handleDuration, handleAmount, handleUpfrontPayment } from "./order.formutils";
 
 const SubscriptionView: React.FunctionComponent<IProps> = ({ setForm, form, setStep, step, subscription_plans, loading }) => {
     // dynamic data, can be integrated with an api in the future
@@ -23,6 +24,10 @@ const SubscriptionView: React.FunctionComponent<IProps> = ({ setForm, form, setS
             percent: step.percent += step.increment
         })
     }
+
+    const durationRef = register("duration", required("duration", form))
+    const amountRef = register("amount", required("amount", form))
+    const upfrontpaymentRef = register("upfrontpayment", required("upfrontpayment", form))
 
     return (
         <StyledForm onSubmit={handleSubmit(onNext)}>
@@ -42,25 +47,9 @@ const SubscriptionView: React.FunctionComponent<IProps> = ({ setForm, form, setS
                 </AppLabel>
                 <AppDropdown
                     config={{
-                        dropdownRef: register("duration", required),
-                        dropdownName: "duration",
+                        dropdownRef: durationRef,
                         dropdownValue: form.duration,
-                        dropdownOnChange: (e) => {
-                            let value = Number(e.target.value);
-
-                            let price = subscription_plans.find(p => p?.duration_months === value)?.price_usd_per_gb
-
-                            setForm({
-                                ...form,
-                                duration: value,
-                                price: (price) ? price : form.price,
-                                finalprice: (price) ? (
-                                    (form.upfrontpayment === "yes") ?
-                                        (price * form.amount * .9 * value) :
-                                        (price * form.amount * value)
-                                ) : form.finalprice,
-                            })
-                        }
+                        dropdownOnChange: (e) => handleDuration(e, durationRef, setForm, form, subscription_plans)
                     }}
                 >
                     {
@@ -87,20 +76,9 @@ const SubscriptionView: React.FunctionComponent<IProps> = ({ setForm, form, setS
                 </AppLabel>
                 <AppDropdown
                     config={{
-                        dropdownRef: register("amount", required),
-                        dropdownName: "amount",
+                        dropdownRef: amountRef,
                         dropdownValue: form.amount,
-                        dropdownOnChange: (e) => {
-                            let value = Number(e.target.value);
-
-                            setForm({
-                                ...form,
-                                amount: value,
-                                finalprice: (form.upfrontpayment === "yes") ?
-                                    (form.price * value * .9 * form.duration) :
-                                    (form.price * value * form.duration)
-                            })
-                        }
+                        dropdownOnChange: (e) => handleAmount(e, amountRef, setForm, form)
                     }}
                 >
                     {
@@ -127,18 +105,9 @@ const SubscriptionView: React.FunctionComponent<IProps> = ({ setForm, form, setS
                 </AppLabel>
                 <AppDropdown
                     config={{
-                        dropdownRef: register("upfrontpayment", required),
-                        dropdownName: "upfrontpayment",
+                        dropdownRef: register("upfrontpayment", required("upfrontpayment", form)),
                         dropdownValue: form.upfrontpayment,
-                        dropdownOnChange: (e) => {
-                            setForm({
-                                ...form,
-                                upfrontpayment: e.target.value,
-                                finalprice: (e.target.value === "yes") ?
-                                    (form.finalprice * .9) :
-                                    (form.price * form.amount * form.duration)
-                            })
-                        }
+                        dropdownOnChange: (e) => handleUpfrontPayment(e, upfrontpaymentRef, setForm, form)
                     }}
                 >
                     {

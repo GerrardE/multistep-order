@@ -1,6 +1,7 @@
 import { ISubscriptionPlan } from "../../../../domain/redux/orders/orders.interfaces";
 
 export interface IFormState {
+    [key: string]: string | number | boolean,
     duration: number,
     amount: number,
     price: number,

@@ -4,7 +4,7 @@ import classnames from "classnames";
 import { AppButton, AppErrorMessage, AppInput, AppLabel, T3, T6 } from "../../atoms";
 import { StyledForm, StyledRow } from "./order.styles";
 import { IProps } from "./order.interfaces";
-import { cardNumberSchema, pinSchema, required } from "../../../utils/validations/schema";
+import { cardNumberSchema, pinSchema, required } from "./order.formutils";
 import SummaryView from "./summary.view";
 
 const PaymentdataView: React.FunctionComponent<IProps> = ({ setForm, form, setStep, step }) => {
@@ -72,7 +72,7 @@ const PaymentdataView: React.FunctionComponent<IProps> = ({ setForm, form, setSt
                 <AppInput
                     config={{
                         inputType: "date",
-                        inputRef: register("cardexpdate", required),
+                        inputRef: register("cardexpdate", required("cardexpdate", form)),
                         inputId: "cardexpdate",
                         inputName: "cardexpdate",
                         inputClassName: classnames("form-control", {

@@ -6,7 +6,7 @@ import classnames from "classnames";
 import { AppButton, AppErrorMessage, AppInput, AppLabel, T3, T6 } from "../../atoms";
 import { StyledCol, StyledForm, StyledRow, Spinner } from "./order.styles";
 import { IProps } from "./order.interfaces";
-import { emailSchema, required } from "../../../utils/validations/schema";
+import { emailSchema, required } from "./order.formutils";
 import SummaryView from "./summary.view";
 import { postOrderThunk } from "../../../../domain/redux/orders/orders.thunks";
 
@@ -64,7 +64,7 @@ const ConfirmationView: React.FunctionComponent<IProps> = ({ setForm, form, step
                 <AppInput
                     config={{
                         inputType: "checkbox",
-                        inputRef: register("acceptedterms", required),
+                        inputRef: register("acceptedterms", required("acceptedterms", form)),
                         inputId: "acceptedterms",
                         inputName: "acceptedterms",
                         inputClassName: "acceptedterms",

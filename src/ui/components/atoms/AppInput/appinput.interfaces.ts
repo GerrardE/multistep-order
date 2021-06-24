@@ -9,7 +9,6 @@ interface IProps {
     inputRef: UseFormRegisterReturn,
     inputId?: string;
     inputName?: string;
-    inputReadOnly?: boolean;
     inputDefaultValue?: string | number;
     inputChecked?: boolean,
     inputOnChange?: React.ChangeEventHandler<HTMLInputElement>;

@@ -38,7 +38,6 @@ const OrderView: React.FunctionComponent = () => {
                 duration: defaultsubscription?.duration_months,
                 finalprice: defaultsubscription?.price_usd_per_gb * form.amount * form.duration
             })
-
         }
     }, [form, defaultsubscription])
 
